@@ -96,39 +96,19 @@ object P9 extends App {
     println(elements.map("%2d " format _).mkString)
   }
 
-  /*def insertMarbleLean(state: LeanGameState, marbleValue: Int, lastMarble: Int): LeanGameState = {
-    val nextPlayer = (state.currentPlayer + 1) % players
-    if (marbleValue % 23 == 0) {
-      val removeIndex = (state.currentMarble + 7*state.marblesInCircle - 7) % state.marblesInCircle
-      val newMarblesInCircle = state.marblesInCircle - 1
-
-      val newPlayerScore = state.scores(state.currentPlayer) + marbleValue + state.marbles(removeIndex)
-      val updatedScores = state.scores.updated(state.currentPlayer, newPlayerScore)
-      LeanGameState()
-    } else {
-      LeanGameState()
-    }
-  }*/
-
-  def timeIt[A](op: => A): A = {
-    val start = System.currentTimeMillis()
-    val result = op
-    val end = System.currentTimeMillis()
-    println(s"total time: ${(end-start) / 1000} seconds")
-    result
-  }
-
+  // slow solution used for part 1
   //val initialState = GameState(IndexedSeq(0), 0, 0, IndexedSeq.fill(players)(0))
   //val finalState = timeIt((1 until lastMarble).foldLeft(initialState)(insertMarble(_, _, lastMarble)))
 
   //val winningScore = finalState.scores.max
   //println(s"Part 1: winning score: $winningScore")
 
-  val scores = timeIt(calculatePlayerScores(players, lastMarble))
+  // fast solution for part 2
+  val scores = Util.timeIt(calculatePlayerScores(players, lastMarble))
   val winningScore2 = scores.max
   println(s"Part 1 (second solution): winning score: $winningScore2")
 
-  val scores100x = timeIt(calculatePlayerScores(players, lastMarble * 100))
+  val scores100x = Util.timeIt(calculatePlayerScores(players, lastMarble * 100))
   val winningScore100x = scores100x.max
   println(s"Part 2: winning score of marbles x 100: $winningScore100x")
 }
